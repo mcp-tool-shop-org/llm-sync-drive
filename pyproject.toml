@@ -1,0 +1,46 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "llm-sync-drive"
+version = "0.1.0"
+description = "Compile llms.txt from a repo and sync it to Google Drive"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+keywords = ["llm", "mcp", "google-drive", "context", "llms-txt"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Libraries",
+]
+dependencies = [
+    "watchdog>=4.0",
+    "pathspec>=0.12",
+    "google-auth>=2.28",
+    "google-auth-oauthlib>=1.2",
+    "google-api-python-client>=2.118",
+    "pyyaml>=6.0",
+    "click>=8.1",
+    "mcp>=1.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.3"]
+
+[project.scripts]
+llm-sync-drive = "llm_sync_drive.__main__:cli"
+llm-sync-drive-mcp = "llm_sync_drive.server:main"
+
+[project.urls]
+Homepage = "https://github.com/mcp-tool-shop-org/llm-sync-drive"
+Repository = "https://github.com/mcp-tool-shop-org/llm-sync-drive"
+Issues = "https://github.com/mcp-tool-shop-org/llm-sync-drive/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/llm_sync_drive"]
+
+[tool.ruff]
+line-length = 100

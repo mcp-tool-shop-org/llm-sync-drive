@@ -1,0 +1,38 @@
+# .llmsignore — files to exclude from llms.txt compilation
+# Works like .gitignore; these patterns are checked IN ADDITION to .gitignore
+
+# Test fixtures and snapshots
+tests/fixtures/
+tests/__snapshots__/
+**/*.snap
+
+# Build artifacts
+dist/
+build/
+*.min.js
+*.min.css
+*.map
+
+# Large generated files
+*.generated.*
+
+# Binary assets
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.woff
+*.woff2
+*.ttf
+*.eot
+*.mp3
+*.wav
+*.mp4
+
+# Secrets and credentials (defense in depth)
+*.secret
+*.key
+*.pem
+.env
+.env.*
