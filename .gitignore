@@ -1,9 +1,10 @@
 # Compiled output
 llms.txt
 
-# Google OAuth tokens — NEVER commit these
+# Google OAuth tokens and config — NEVER commit these
 credentials.json
 token.json
+llm-sync-drive.yaml
 
 # Python
 __pycache__/

@@ -118,8 +118,10 @@ def compile(config_path: str | None, output: str | None) -> None:
 @cli.command()
 def auth() -> None:
     """Authenticate with Google Drive (interactive)."""
+    from .drive import authenticate
+
     cfg = load_config()
-    creds = authenticate(cfg.credentials_path, cfg.token_path)
+    creds = authenticate(cfg.credentials_path, cfg.token_path, auth_mode="oauth")
     click.echo(f"Authenticated successfully. Token saved to {cfg.token_path}")
 
 
