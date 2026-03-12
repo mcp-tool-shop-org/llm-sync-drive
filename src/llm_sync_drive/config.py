@@ -29,8 +29,8 @@ class Config:
     # Path to cached token (OAuth mode only)
     token_path: Path = Path("token.json")
 
-    # Auth mode: "service-account" (headless, recommended for MCP) or "oauth"
-    auth_mode: str = "service-account"
+    # Auth mode: "adc" (default, simplest), "service-account", or "oauth"
+    auth_mode: str = "adc"
 
     # Output filename in Drive
     drive_filename: str = "llms.txt"
@@ -127,8 +127,8 @@ def generate_default_config(repo_path: str = ".") -> str:
 # Path to the repository to compile (relative to this file, or absolute)
 repo_path: "{repo_path}"
 
-# Auth mode: "service-account" (headless, recommended) or "oauth" (interactive)
-auth_mode: "service-account"
+# Auth mode: "adc" (simplest), "service-account" (headless key), or "oauth" (interactive)
+auth_mode: "adc"
 
 # Service account key or OAuth credentials file
 credentials_path: "credentials.json"

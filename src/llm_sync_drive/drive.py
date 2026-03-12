@@ -21,17 +21,29 @@ SCOPES = ["https://www.googleapis.com/auth/drive.file"]
 def authenticate(
     credentials_path: Path,
     token_path: Path,
-    auth_mode: str = "service-account",
+    auth_mode: str = "adc",
 ) -> Credentials | sa.Credentials:
     """Authenticate with Google Drive.
 
     auth_mode:
-      - "service-account" (default): headless via JSON key file. Best for MCP/CI.
+      - "adc" (default): Application Default Credentials via gcloud. Simplest.
+      - "service-account": headless via JSON key file. Best for MCP/CI.
       - "oauth": interactive browser consent. Caches token for subsequent runs.
     """
+    if auth_mode == "adc":
+        return _auth_adc()
     if auth_mode == "service-account":
         return _auth_service_account(credentials_path)
     return _auth_oauth(credentials_path, token_path)
+
+
+def _auth_adc() -> Credentials:
+    """Authenticate via Application Default Credentials (gcloud auth application-default login)."""
+    import google.auth
+
+    creds, project = google.auth.default(scopes=SCOPES)
+    log.info("Authenticated via ADC (project: %s)", project)
+    return creds
 
 
 def _auth_service_account(credentials_path: Path) -> sa.Credentials:
