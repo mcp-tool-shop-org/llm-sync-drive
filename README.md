@@ -28,10 +28,10 @@ pip install -e .
 4. Install the [gcloud CLI](https://cloud.google.com/sdk/docs/install) if you don't have it
 5. Run:
    ```bash
-   gcloud auth application-default login --scopes=https://www.googleapis.com/auth/drive.file
+   gcloud auth application-default login --scopes="https://www.googleapis.com/auth/drive.file,https://www.googleapis.com/auth/cloud-platform"
    ```
 6. A browser opens for consent — sign in with your Google account
-7. Done. No credentials file needed. ADC token is cached at `~/.config/gcloud/application_default_credentials.json`
+7. Done. No credentials file needed. ADC token is cached at `%APPDATA%/gcloud/application_default_credentials.json` (Windows) or `~/.config/gcloud/application_default_credentials.json` (macOS/Linux)
 
 #### Option B: Service Account (headless key file)
 
