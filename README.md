@@ -21,9 +21,24 @@ pip install -e .
 
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Create a project (or use an existing one)
-3. Enable the **Google Drive API**
+3. Navigate to **APIs & Services → Library**, search for **Google Drive API**, and **Enable** it
+
+#### Option A: Service Account (Recommended for MCP / headless)
+
 4. Go to **APIs & Services → Credentials**
-5. Create an **OAuth 2.0 Client ID** (Application type: **Desktop app**)
+5. Click **+ Create Credentials → Service account**
+6. Name it (e.g., `mcp-drive-sync`) and click **Create and Continue**, then **Done**
+7. Copy the service account email (e.g., `mcp-drive-sync@your-project.iam.gserviceaccount.com`)
+8. Click the service account → **Keys** tab → **Add Key → Create new key → JSON**
+9. Save the downloaded file as `credentials.json` in your repo directory
+10. In your **personal Google Drive**, create a folder (e.g., `MCP-Context-Sync`)
+11. **Share** that folder with the service account email (Editor permissions)
+12. Copy the **Folder ID** from the folder's URL (the string after `folders/`)
+
+#### Option B: OAuth 2.0 (Interactive, for CLI use)
+
+4. Go to **APIs & Services → OAuth consent screen**, set to External, add your email as a test user
+5. Go to **Credentials → + Create Credentials → OAuth client ID** (Desktop app)
 6. Download the JSON and save it as `credentials.json`
 
 ### 3. Initialize Config
@@ -35,17 +50,20 @@ llm-sync-drive init --repo .
 
 This creates `llm-sync-drive.yaml`. Edit it to set:
 
+- `auth_mode`: `"service-account"` (default) or `"oauth"`
 - `credentials_path`: path to your `credentials.json`
 - `drive_folder_id`: the Google Drive folder ID (from the folder's URL)
 - `project_description`: a one-liner about your project
 
-### 4. Authenticate
+### 4. Authenticate (OAuth only)
+
+If using OAuth mode, run:
 
 ```bash
 llm-sync-drive auth
 ```
 
-Opens a browser for Google OAuth consent. The token is cached in `token.json`.
+Opens a browser for consent. The token is cached in `token.json`. Service account mode needs no auth step — the key file is all you need.
 
 ### 5. Sync Once
 
@@ -134,8 +152,9 @@ All options live in `llm-sync-drive.yaml`:
 | Key | Description | Default |
 |-----|-------------|---------|
 | `repo_path` | Path to the repository | required |
-| `credentials_path` | Google OAuth credentials JSON | `credentials.json` |
-| `token_path` | Cached OAuth token | `token.json` |
+| `auth_mode` | `"service-account"` (headless) or `"oauth"` (interactive) | `service-account` |
+| `credentials_path` | Service account key or OAuth credentials JSON | `credentials.json` |
+| `token_path` | Cached OAuth token (oauth mode only) | `token.json` |
 | `drive_folder_id` | Drive folder to upload into | `null` |
 | `drive_file_id` | Drive file ID (auto-set after first upload) | `null` |
 | `drive_filename` | Filename in Drive | `llms.txt` |

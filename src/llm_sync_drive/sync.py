@@ -48,7 +48,7 @@ def do_sync(config: Config, config_path: Path | None = None) -> SyncResult:
         log.info("Local copy written to %s", config.local_output)
 
     # Upload to Drive
-    creds = authenticate(config.credentials_path, config.token_path)
+    creds = authenticate(config.credentials_path, config.token_path, config.auth_mode)
     file_id = upload_or_update(
         creds=creds,
         content=content,

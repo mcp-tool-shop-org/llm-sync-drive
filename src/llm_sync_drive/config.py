@@ -26,8 +26,11 @@ class Config:
     # Path to Google OAuth credentials JSON
     credentials_path: Path = Path("credentials.json")
 
-    # Path to cached token
+    # Path to cached token (OAuth mode only)
     token_path: Path = Path("token.json")
+
+    # Auth mode: "service-account" (headless, recommended for MCP) or "oauth"
+    auth_mode: str = "service-account"
 
     # Output filename in Drive
     drive_filename: str = "llms.txt"
@@ -109,6 +112,8 @@ def _parse_config(data: dict[str, Any], base_dir: Path) -> Config:
         cfg.extra_ignore_patterns = [str(p) for p in v]
     if v := data.get("project_description"):
         cfg.project_description = str(v)
+    if v := data.get("auth_mode"):
+        cfg.auth_mode = str(v)
 
     return cfg
 
@@ -122,10 +127,13 @@ def generate_default_config(repo_path: str = ".") -> str:
 # Path to the repository to compile (relative to this file, or absolute)
 repo_path: "{repo_path}"
 
-# Google OAuth credentials file (download from Google Cloud Console)
+# Auth mode: "service-account" (headless, recommended) or "oauth" (interactive)
+auth_mode: "service-account"
+
+# Service account key or OAuth credentials file
 credentials_path: "credentials.json"
 
-# Cached OAuth token (created automatically after first auth)
+# Cached OAuth token (only used when auth_mode is "oauth")
 token_path: "token.json"
 
 # Google Drive folder ID to upload into (from the Drive URL)
