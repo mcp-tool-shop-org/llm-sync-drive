@@ -14,7 +14,7 @@ export const config: SiteConfig = {
     headlineAccent: 'repo context for LLMs.',
     description: 'Compile your repository into a structured llms.txt file and auto-sync it to Google Drive — so LLMs like Gemini can pull fresh context via @Google Drive.',
     primaryCta: { href: '#usage', label: 'Get started' },
-    secondaryCta: { href: '#features', label: 'Learn more' },
+    secondaryCta: { href: 'handbook/', label: 'Read the Handbook' },
     previews: [
       { label: 'Install', code: 'pip install llm-sync-drive' },
       { label: 'Init', code: 'llm-sync-drive init --repo .' },
