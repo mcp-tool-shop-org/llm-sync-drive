@@ -121,7 +121,7 @@ def auth() -> None:
     from .drive import authenticate
 
     cfg = load_config()
-    creds = authenticate(cfg.credentials_path, cfg.token_path, auth_mode="oauth")
+    authenticate(cfg.credentials_path, cfg.token_path, auth_mode="oauth")
     click.echo(f"Authenticated successfully. Token saved to {cfg.token_path}")
 
 
